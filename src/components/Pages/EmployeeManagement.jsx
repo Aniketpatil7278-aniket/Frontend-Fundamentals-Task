@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Container, Paper, Typography } from "@mui/material";
+import { Container, Paper, Typography } from "@mui/material";
 
 import EmployeeForm from "../EmployeeManagment/EmployeeForm"
 import EmployeeTable from "../EmployeeManagment/EmployeeTable";
@@ -13,9 +13,6 @@ const EmployeeManagement = () => {
   const [editIndex, setEditIndex] = useState(null);
 
 
-  const [message, setMessage] = useState("");
-
-
   const initialValue = {
     employeeId: "",
     employeeName: "",
@@ -26,6 +23,7 @@ const EmployeeManagement = () => {
 
   const [currentEmployee, setCurrentEmployee] = useState(initialValue);
 
+  //submit
   const handleSubmit = (values, { resetForm }) => {
 
     const duplicateEmployee = empdata.find(
@@ -34,7 +32,7 @@ const EmployeeManagement = () => {
     );
 
     if (duplicateEmployee) {
-      setMessage("Employee ID already exists");
+      alert("Employee ID already exists");
       return;
     }
 
@@ -44,13 +42,13 @@ const EmployeeManagement = () => {
       updatedEmployees[editIndex] = values;
 
       setEmpdata(updatedEmployees);
-      setMessage("Employee Updated Successfully!");
+      alert("Employee Updated Successfully!");
 
 
       setEditIndex(null);
     } else {
       setEmpdata([...empdata, values]);
-      setMessage("Employee Added Successfully!");
+      alert("Employee Added Successfully!");
 
     }
 
@@ -59,18 +57,21 @@ const EmployeeManagement = () => {
     resetForm();
   };
 
+//edit
   const handleEdit = (index) => {
     setCurrentEmployee(empdata[index]);
 
     setEditIndex(index);
   };
 
+  //delete
   const handleDelete = (index) => {
     const updatedEmployees = empdata.filter((_, i) => i !== index);
 
     setEmpdata(updatedEmployees);
   };
 
+  //search
   const filteredEmployees = empdata.filter((emp) =>
     emp.employeeName.toLowerCase().includes(search.toLowerCase()),
   );
@@ -89,11 +90,7 @@ const EmployeeManagement = () => {
         />
 
         <SearchEmployee search={search} setSearch={setSearch} />
-        {message && (
-          <Alert variant="filled" severity="success" className="mb-2">
-            {message}
-          </Alert>
-        )}
+        
 
         <EmployeeTable
           employees={filteredEmployees}
