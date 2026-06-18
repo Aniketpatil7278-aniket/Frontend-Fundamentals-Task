@@ -7,7 +7,7 @@ const NumArray =()=>{
 
   const [newElement, setNewElement] = useState("");
 
-  //function for the onchahge
+  //function for th e onchahge
   const handleChange = (e) => {
     const value = e.target.value;
 
@@ -31,11 +31,12 @@ const NumArray =()=>{
   //add the element function
   const handleAddElement = () => {
     if (newElement.trim() === "") {
-      alert("Please Enter the Element");
+      setErrormessage("Please Enter the Element");
       return;
     }
     if (isNaN(newElement)) {
-      alert("Only numbers are allowed");
+      setErrormessage("Only numbers are allowed");
+
       return;
     }
     setArraydata([...arraydata, Number(newElement)]); // convert the array ele in number
@@ -112,7 +113,7 @@ const NumArray =()=>{
           <Typography>Result is :--</Typography>
 
           <Typography className="text-emerald-500">
-            {arraydata.join(", ")}
+            {arraydata.length >0 ? arraydata.join(", ") : "NO DATA"}
           </Typography>
         </CardContent>
       </Card>
