@@ -1,20 +1,22 @@
 import { useState } from "react";
-import { Container, Paper, Typography } from "@mui/material";
+import { Alert, Container, Paper, Typography } from "@mui/material";
 
 import EmployeeForm from "../EmployeeManagment/EmployeeForm"
 import EmployeeTable from "../EmployeeManagment/EmployeeTable";
 import SearchEmployee from "../EmployeeManagment/SearchEmployee";
 
 const EmployeeManagement = () => {
-  const [employees, setEmployees] = useState([]);
+  const [empdata, setEmpdata] = useState([]);
 
   const [search, setSearch] = useState("");
 
   const [editIndex, setEditIndex] = useState(null);
 
 
+  const [message, setMessage] = useState("");
 
-  const emptyEmployee = {
+
+  const initialValue = {
     employeeId: "",
     employeeName: "",
     department: "",
@@ -22,49 +24,54 @@ const EmployeeManagement = () => {
     salary: "",
   };
 
-  const [currentEmployee, setCurrentEmployee] = useState(emptyEmployee);
+  const [currentEmployee, setCurrentEmployee] = useState(initialValue);
 
   const handleSubmit = (values, { resetForm }) => {
-    const duplicateEmployee = employees.find(
+
+    const duplicateEmployee = empdata.find(
       (emp, index) =>
         emp.employeeId === values.employeeId && index !== editIndex,
     );
 
     if (duplicateEmployee) {
-      alert("Employee ID already exists");
+      setMessage("Employee ID already exists");
       return;
     }
 
     if (editIndex !== null) {
-      const updatedEmployees = [...employees];
+      const updatedEmployees = [...empdata];
 
       updatedEmployees[editIndex] = values;
 
-      setEmployees(updatedEmployees);
+      setEmpdata(updatedEmployees);
+      setMessage("Employee Updated Successfully!");
+
 
       setEditIndex(null);
     } else {
-      setEmployees([...employees, values]);
+      setEmpdata([...empdata, values]);
+      setMessage("Employee Added Successfully!");
+
     }
 
-    setCurrentEmployee(emptyEmployee);
+    setCurrentEmployee(initialValue);
 
     resetForm();
   };
 
   const handleEdit = (index) => {
-    setCurrentEmployee(employees[index]);
+    setCurrentEmployee(empdata[index]);
 
     setEditIndex(index);
   };
 
   const handleDelete = (index) => {
-    const updatedEmployees = employees.filter((_, i) => i !== index);
+    const updatedEmployees = empdata.filter((_, i) => i !== index);
 
-    setEmployees(updatedEmployees);
+    setEmpdata(updatedEmployees);
   };
 
-  const filteredEmployees = employees.filter((emp) =>
+  const filteredEmployees = empdata.filter((emp) =>
     emp.employeeName.toLowerCase().includes(search.toLowerCase()),
   );
 
@@ -82,6 +89,11 @@ const EmployeeManagement = () => {
         />
 
         <SearchEmployee search={search} setSearch={setSearch} />
+        {message && (
+          <Alert variant="filled" severity="success" className="mb-2">
+            {message}
+          </Alert>
+        )}
 
         <EmployeeTable
           employees={filteredEmployees}

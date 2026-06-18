@@ -16,7 +16,7 @@ const EmployeeForm = ({ initialValues, onSubmit, editMode }) => {
           <Grid container spacing={2}>
             <Grid size={{ xs: 12, md: 6 }}>
               <TextField
-                fullWidth
+                fullWidth required
                 label="Employee ID"
                 name="employeeId"
                 value={values.employeeId}
@@ -29,7 +29,7 @@ const EmployeeForm = ({ initialValues, onSubmit, editMode }) => {
 
             <Grid size={{ xs: 12, md: 6 }}>
               <TextField
-                fullWidth
+                fullWidth required
                 label="Employee Name"
                 name="employeeName"
                 value={values.employeeName}
@@ -42,7 +42,7 @@ const EmployeeForm = ({ initialValues, onSubmit, editMode }) => {
 
             <Grid size={{ xs: 12, md: 6 }}>
               <TextField
-                fullWidth
+                fullWidth required
                 label="Department"
                 name="department"
                 value={values.department}
@@ -55,7 +55,7 @@ const EmployeeForm = ({ initialValues, onSubmit, editMode }) => {
 
             <Grid size={{ xs: 12, md: 6 }}>
               <TextField
-                fullWidth
+                fullWidth required
                 label="Designation"
                 name="designation"
                 value={values.designation}
@@ -68,7 +68,7 @@ const EmployeeForm = ({ initialValues, onSubmit, editMode }) => {
 
             <Grid size={{ xs: 12 }}>
               <TextField
-                fullWidth
+                fullWidth required
                 label="Salary"
                 name="salary"
                 value={values.salary}
