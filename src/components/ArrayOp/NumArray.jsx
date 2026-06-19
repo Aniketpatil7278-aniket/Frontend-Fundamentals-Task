@@ -7,6 +7,8 @@ const NumArray =()=>{
 
   const [newElement, setNewElement] = useState("");
 
+  const [originalArray, setOriginalArray] = useState([]);
+
   //function for th e onchahge
   const handleChange = (e) => {
     const value = e.target.value;
@@ -24,6 +26,7 @@ const NumArray =()=>{
       return;
     }
     const arr = input.split(",").map((item) => Number(item.trim()));
+     setOriginalArray(arr); 
     setArraydata(arr);
     console.log(arr);
   };
@@ -32,6 +35,7 @@ const NumArray =()=>{
   const handleAddElement = () => {
     if (newElement.trim() === "") {
       setErrormessage("Please Enter the Element");
+      
       return;
     }
     if (isNaN(newElement)) {
@@ -40,6 +44,8 @@ const NumArray =()=>{
       return;
     }
     setArraydata([...arraydata, Number(newElement)]); // convert the array ele in number
+    setOriginalArray([...arraydata, Number(newElement)]);
+
     setNewElement("");
   };
 
@@ -110,10 +116,22 @@ const NumArray =()=>{
         sx={{ maxWidth: 800, width: "100%", borderRadius: 4, boxShadow: 5 }}
       >
         <CardContent>
+          <Typography variant="h6">Original Array :</Typography>
+
+          <Typography className="text-blue-500">
+            {originalArray.length > 0 ? originalArray.join(", ") : "NO DATA"}
+          </Typography>
+        </CardContent>
+      </Card>
+
+      <Card
+        sx={{ maxWidth: 800, width: "100%", borderRadius: 4, boxShadow: 5 }}
+      >
+        <CardContent>
           <Typography>Result is :--</Typography>
 
           <Typography className="text-emerald-500">
-            {arraydata.length >0 ? arraydata.join(", ") : "NO DATA"}
+            {arraydata.length > 0 ? arraydata.join(", ") : "NO DATA"}
           </Typography>
         </CardContent>
       </Card>

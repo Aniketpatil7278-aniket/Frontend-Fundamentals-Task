@@ -6,6 +6,8 @@ const StringArray = () => {
   const [stringarray, setStringarray] = useState([]);
   const [errormessage, setErrormessage] = useState("");
 
+  const [originalArray, setOriginalArray] = useState([]);
+
   const handleChange = (e) => {
     const value = e.target.value;
 
@@ -24,7 +26,11 @@ const StringArray = () => {
       setErrormessage("Please enter a string value.");
       return;
     }
-    setStringarray([...stringarray, input.trim()]);
+    const newArray = [...stringarray, input.trim()];
+
+    setStringarray(newArray);
+    setOriginalArray(newArray);
+
     setInput("");
     setErrormessage("");
   };
@@ -43,7 +49,7 @@ const StringArray = () => {
 
   //reverseArray
   const reverseArray = () => {
-    setStringarray([...stringarray].reverse());
+    setStringarray([...originalArray].reverse());
   };
 
   //First Item  
@@ -75,16 +81,26 @@ const StringArray = () => {
       </Button>
       {errormessage && (
         <Alert severity="error" variant="filled">
-          {" "}
-          {errormessage}{" "}
+          {errormessage}
         </Alert>
       )}
+      <Card
+        sx={{ maxWidth: 800, width: "100%", borderRadius: 4, boxShadow: 5 }}
+      >
+        <CardContent>
+          <Typography variant="h6">Original Array :</Typography>
+
+          <Typography className="text-blue-500">
+            {originalArray.length > 0 ? originalArray.join(", ") : "NO DATA"}
+          </Typography>
+        </CardContent>
+      </Card>
 
       <Card
         sx={{ maxWidth: 800, width: "100%", borderRadius: 4, boxShadow: 5 }}
       >
         <CardContent>
-          <Typography variant="h6">Entered Array is :</Typography>
+          <Typography variant="h6">Result:</Typography>
           <Typography className="text-emerald-500">
             {stringarray.length > 0 ? stringarray.join(", ") : "NO DATA"}
           </Typography>

@@ -44,7 +44,6 @@ const EmployeeManagement = () => {
       setEmpdata(updatedEmployees);
       alert("Employee Updated Successfully!");
 
-
       setEditIndex(null);
     } else {
       setEmpdata([...empdata, values]);
@@ -66,9 +65,11 @@ const EmployeeManagement = () => {
 
   //delete
   const handleDelete = (index) => {
-    const updatedEmployees = empdata.filter((_, i) => i !== index);
+    if(confirm("Are You Sure")){
+       const updatedEmployees = empdata.filter((_, i) => i !== index);
 
-    setEmpdata(updatedEmployees);
+       setEmpdata(updatedEmployees);
+    }
   };
 
   //search
